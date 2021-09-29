@@ -114,14 +114,14 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Table of endpoints</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! | Endpoint                    | Method | Description        | Implementation                | Parameters                       | Returns           |</span>
-<span class="doccomment">//! |-----------------------------|--------|--------------------|-------------------------------|----------------------------------|-------------------|</span>
+<span class="doccomment">//! | Endpoint                    | Method | Description        | Implementation              | Parameters                      | Returns           |</span>
+<span class="doccomment">//! |-----------------------------|--------|--------------------|-----------------------------|---------------------------------|-------------------|</span>
 <span class="doccomment">//! | /simulation                 | POST   | Add a simulation   | [`post_simulation`][post_s] | [`SimulationFormStruct`][s_f_s] | [`Simulation`]    |</span>
-<span class="doccomment">//! | /simulation                 | GET    | List simulations   | [`get_simulations`][get_s] | None                             | [ [`Simulation`] ]|</span>
-<span class="doccomment">//! | /simulation/ \[id]          | GET    | Simulation details | [`todo!`]                     | None                             | [`Simulation`]    |</span>
-<span class="doccomment">//! | /simulation/ \[id] /results | GET    | Simulation results | [`todo!`]                     | None                             | plain text        |</span>
-<span class="doccomment">//! | /simulation/ \[id] /logs    | GET    | Simulation logs    | [`todo!`]                     | None                             | plain text        |</span>
-<span class="doccomment">//! | /debug                      | GET    | DPsim-api debug    | [`todo!`]                     | None                             | plain text        |</span>
+<span class="doccomment">//! | /simulation                 | GET    | List simulations   | [`get_simulations`][get_s]  | None                            | [ [`Simulation`] ]|</span>
+<span class="doccomment">//! | /simulation/ \[id]          | GET    | Simulation details | [`todo!`]                   | None                            | [`Simulation`]    |</span>
+<span class="doccomment">//! | /simulation/ \[id] /results | GET    | Simulation results | [`todo!`]                   | None                            | plain text        |</span>
+<span class="doccomment">//! | /simulation/ \[id] /logs    | GET    | Simulation logs    | [`todo!`]                   | None                            | plain text        |</span>
+<span class="doccomment">//! | /debug                      | GET    | DPsim-api debug    | [`todo!`]                   | None                            | plain text        |</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [post_s]: routes::post_simulation()</span>
 <span class="doccomment">//! [get_s]: routes::get_simulations()</span>
@@ -149,13 +149,13 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Simulation</span> {
     <span class="ident">error</span>: <span class="ident">String</span>,
     <span class="ident">load_profile_data</span>: <span class="ident">Vec</span> <span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">model_id</span>:        <span class="ident">u64</span>,
-    <span class="ident">simulation_id</span>:   <span class="ident">u64</span>,
-    <span class="ident">simulation_type</span>: <span class="ident">SimulationType</span>,
+    <span class="ident">model_id</span>:          <span class="ident">u64</span>,
+    <span class="ident">simulation_id</span>:     <span class="ident">u64</span>,
+    <span class="ident">simulation_type</span>:   <span class="ident">SimulationType</span>,
 }
 
 <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Enum for the various Simulation types&quot;</span>]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">JsonSchema</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">FromFormField</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">JsonSchema</span>)]</span>
 <span class="kw">enum</span> <span class="ident">SimulationType</span> {
     <span class="ident">Powerflow</span>,
     <span class="ident">Outage</span>
@@ -192,7 +192,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">amqp</span> {
     <span class="kw">use</span> <span class="ident">lapin::Result</span>;
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">publish</span>(<span class="ident">simulation</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="kw">super</span>::Simulation</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">publish</span>(<span class="ident">_simulation</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="kw">super</span>::Simulation</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(())
     }
 }
