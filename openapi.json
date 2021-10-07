@@ -36,6 +36,33 @@
         ],
         "type": "object"
       },
+      "SimulationForm": {
+        "properties": {
+          "load_profile_data": {
+            "items": {
+              "format": "uint8",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "model_id": {
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "simulation_type": {
+            "$ref": "#/definitions/SimulationType"
+          }
+        },
+        "required": [
+          "load_profile_data",
+          "model_id",
+          "simulation_type"
+        ],
+        "title": "SimulationFormStructJsonSchema",
+        "type": "object"
+      },
       "SimulationType": {
         "description": "Enum for the various Simulation types",
         "enum": [
@@ -43,8 +70,7 @@
           "Outage"
         ],
         "type": "string"
-      },
-      "TempFile": {}
+      }
     }
   },
   "info": {
@@ -77,7 +103,7 @@
           "content": {
             "application/octet-stream": {
               "schema": {
-                "$ref": "#/components/schemas/TempFile"
+                "$ref": "#/components/schemas/SimulationForm"
               }
             }
           },
