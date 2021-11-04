@@ -642,7 +642,7 @@
 <span class="macro">create_endpoint_with_doc!</span>(
     <span class="attribute">#[<span class="ident">describe</span>(<span class="string">&quot;Show details for a simulation&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">example</span>(<span class="string">&quot;curl -X GET -H &#39;Accept: application/json&#39; http://localhost:8000/simulation/1&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">summary</span>(<span class="string">&quot;# Simulation using ID&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">summary</span>(<span class="string">&quot;# Get a simulation using the ID&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">openapi</span>]</span>
     <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/simulation/&lt;id&gt;&quot;</span>, <span class="ident">format</span><span class="op">=</span><span class="string">&quot;application/json&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_simulation_id</span>(<span class="ident">id</span>: <span class="ident">u64</span>) -&gt; <span class="ident">SimulationResult</span> {
@@ -656,7 +656,7 @@
 <span class="macro">create_endpoint_with_doc!</span>(
     <span class="attribute">#[<span class="ident">describe</span>(<span class="string">&quot;List the simulations&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">example</span>(<span class="string">&quot;curl -X GET -H &#39;Accept: application/json&#39; http://localhost:8000/simulation&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">summary</span>(<span class="string">&quot;# Simulation&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">summary</span>(<span class="string">&quot;# Get array of all simulations&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">openapi</span>]</span>
     <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/simulation&quot;</span>, <span class="ident">format</span><span class="op">=</span><span class="string">&quot;application/json&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_simulations</span>() -&gt; <span class="ident">SimulationResult</span> {
@@ -686,7 +686,7 @@
              -F model_id=1
              -F allowed_file_types=application/zip hocalhost:8000/simulation&quot;</span>
     )]</span>
-    <span class="attribute">#[<span class="ident">summary</span>(<span class="string">&quot;# Simulation&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">summary</span>(<span class="string">&quot;# Create a simulation&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/simulation&quot;</span>, <span class="ident">format</span> <span class="op">=</span> <span class="string">&quot;multipart/form-data&quot;</span>, <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;&lt;form&gt;&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">post_simulation</span>(<span class="ident">form</span>: <span class="ident">Form</span> <span class="op">&lt;</span><span class="ident">SimulationFormStruct</span> <span class="op">&lt;</span> <span class="lifetime">&#39;_</span> <span class="op">&gt;</span><span class="op">&gt;</span> ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Json</span><span class="op">&lt;</span><span class="ident">Simulation</span><span class="op">&gt;</span>, <span class="ident">SimulationError</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">parse_simulation_form</span>(<span class="ident">form</span>).<span class="kw">await</span> {

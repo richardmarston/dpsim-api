@@ -95,7 +95,7 @@
             "description": ""
           }
         },
-        "summary": "Simulation"
+        "summary": "Get array of all simulations"
       },
       "post": {
         "description": "Create a new simulation\n\n* Content-Type: multipart/form-data\n\n* Example request:\n\n```\n\ncurl -X POST -H 'Accept: application/json' -F file=@testdata/load_profile_data.zip -F model_id=1 -F allowed_file_types=application/zip hocalhost:8000/simulation ```",
@@ -122,7 +122,7 @@
             "description": ""
           }
         },
-        "summary": "Simulation"
+        "summary": "Create a simulation"
       }
     },
     "/simulation/{id}": {
@@ -153,7 +153,7 @@
             "description": ""
           }
         },
-        "summary": "Simulation using ID"
+        "summary": "Get a simulation using the ID"
       }
     }
   }
