@@ -7,11 +7,8 @@
           "error": {
             "type": "string"
           },
-          "load_profile_data": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
+          "load_profile_id": {
+            "type": "string"
           },
           "model_id": {
             "type": "string"
@@ -27,7 +24,7 @@
         },
         "required": [
           "error",
-          "load_profile_data",
+          "load_profile_id",
           "model_id",
           "simulation_id",
           "simulation_type"
@@ -35,28 +32,24 @@
         "type": "object"
       },
       "SimulationForm": {
+        "description": "## Parameters: * simulation_type - String - must be one of \"Powerflow\", \"Outage\" * load_profile_id - String - must be a valid id that exists in the associated sogno file service * model_id - String - must be a valid id that exists in the associated sogno file service",
         "properties": {
-          "load_profile_data": {
-            "items": {
-              "format": "uint8",
-              "minimum": 0,
-              "type": "integer"
-            },
-            "type": "array"
+          "load_profile_id": {
+            "type": "string"
           },
           "model_id": {
             "type": "string"
           },
           "simulation_type": {
-            "$ref": "#/definitions/SimulationType"
+            "$ref": "#/components/schemas/SimulationType"
           }
         },
         "required": [
-          "load_profile_data",
+          "load_profile_id",
           "model_id",
           "simulation_type"
         ],
-        "title": "SimulationFormStructJsonSchema",
+        "title": "Form for submitting a new Simulation",
         "type": "object"
       },
       "SimulationType": {
@@ -98,7 +91,7 @@
         "operationId": "post_simulation",
         "requestBody": {
           "content": {
-            "application/octet-stream": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/SimulationForm"
               }
