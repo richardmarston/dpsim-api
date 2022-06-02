@@ -618,7 +618,7 @@
              -F allowed_file_types=application/zip hocalhost:8000/simulation&quot;</span>
     )]</span>
     <span class="attribute">#[<span class="ident">summary</span>(<span class="string">&quot;# Create a simulation&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/simulation&quot;</span>, <span class="ident">format</span> <span class="op">=</span> <span class="string">&quot;multipart/form-data&quot;</span>, <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;&lt;form&gt;&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/simulation&quot;</span>, <span class="ident">format</span> <span class="op">=</span> <span class="string">&quot;application/json&quot;</span>, <span class="ident">data</span> <span class="op">=</span> <span class="string">&quot;&lt;form&gt;&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">post_simulation</span>(<span class="ident">form</span>: <span class="ident">Json</span><span class="op">&lt;</span><span class="ident">SimulationForm</span> <span class="op">&gt;</span> ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Json</span><span class="op">&lt;</span><span class="ident">Simulation</span><span class="op">&gt;</span>, <span class="ident">SimulationError</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">parse_simulation_form</span>(<span class="ident">form</span>).<span class="kw">await</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">simulation</span>) =&gt; {
