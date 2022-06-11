@@ -335,6 +335,7 @@
 <span id="330">330</span>
 <span id="331">331</span>
 <span id="332">332</span>
+<span id="333">333</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">rocket::response</span>::{<span class="self">self</span>, <span class="ident">Redirect</span>, <span class="ident">Responder</span>, <span class="ident">Response</span>};
 <span class="kw">use</span> <span class="ident">rocket::serde::json</span>::{<span class="ident">Json</span>, <span class="ident">json</span>};
 <span class="kw">use</span> <span class="ident">async_global_executor::block_on</span>;
@@ -626,7 +627,8 @@
                 <span class="kw">let</span> <span class="ident">load_profile_id</span>  <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">simulation</span>.<span class="ident">load_profile_id</span>;
                 <span class="kw">let</span> <span class="ident">model_url</span>        <span class="op">=</span> <span class="ident">file_service::convert_id_to_url</span>(<span class="ident">model_id</span>).<span class="kw">await</span><span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">load_profile_url</span> <span class="op">=</span> <span class="ident">file_service::convert_id_to_url</span>(<span class="ident">load_profile_id</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-                <span class="kw">let</span> <span class="ident">amqp_sim</span>         <span class="op">=</span> <span class="ident">AMQPSimulation::from_simulation</span>(<span class="kw-2">&amp;</span><span class="ident">simulation</span>, <span class="ident">model_url</span>, <span class="ident">load_profile_url</span>);
+                <span class="kw">let</span> <span class="ident">results_file</span>     <span class="op">=</span> <span class="ident">file_service::create_results_file</span>().<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">amqp_sim</span>         <span class="op">=</span> <span class="ident">AMQPSimulation::from_simulation</span>(<span class="kw-2">&amp;</span><span class="ident">simulation</span>, <span class="ident">model_url</span>, <span class="ident">load_profile_url</span>, <span class="ident">results_file</span>);
                 <span class="kw">match</span> <span class="ident">block_on</span>(<span class="ident">amqp::request_simulation</span>(<span class="kw-2">&amp;</span><span class="ident">amqp_sim</span>)) {
                     <span class="prelude-val">Ok</span>(()) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">simulation</span>),
                     <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">SimulationError</span>  {
@@ -665,7 +667,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Returns the list of routes that we have defined&quot;</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_routes</span>() -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">rocket::Route</span><span class="op">&gt;</span>{
-    <span class="kw">return</span> <span class="macro">rocket_okapi::openapi_get_routes!</span>[ <span class="ident">get_root</span>, <span class="ident">get_api</span>, <span class="ident">get_simulations</span>, <span class="ident">post_simulation</span>, <span class="ident">get_simulation_id</span>]
+    <span class="kw">return</span> <span class="macro">rocket_okapi::openapi_get_routes!</span>[ <span class="ident">get_root</span>, <span class="ident">get_api</span>, <span class="ident">get_simulations</span>, <span class="ident">get_post_simulation</span>, <span class="ident">post_simulation</span>, <span class="ident">get_simulation_id</span>]
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="dpsim_api" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
