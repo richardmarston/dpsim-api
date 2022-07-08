@@ -13,6 +13,9 @@
           "model_id": {
             "type": "string"
           },
+          "results_data": {
+            "type": "string"
+          },
           "results_id": {
             "type": "string"
           },
@@ -29,6 +32,7 @@
           "error",
           "load_profile_id",
           "model_id",
+          "results_data",
           "results_id",
           "simulation_id",
           "simulation_type"
