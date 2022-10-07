@@ -1,0 +1,251 @@
+{
+  "components": {
+    "schemas": {
+      "DomainType": {
+        "description": "Enum for the various Simulation types",
+        "enum": [
+          "SP",
+          "DP",
+          "EMT"
+        ],
+        "type": "string"
+      },
+      "Simulation": {
+        "description": "Struct for encapsulation Simulation details",
+        "properties": {
+          "domain": {
+            "$ref": "#/components/schemas/DomainType"
+          },
+          "error": {
+            "type": "string"
+          },
+          "finaltime": {
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "load_profile_id": {
+            "type": "string"
+          },
+          "model_id": {
+            "type": "string"
+          },
+          "results_data": {
+            "type": "string"
+          },
+          "results_id": {
+            "type": "string"
+          },
+          "simulation_id": {
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "simulation_type": {
+            "$ref": "#/components/schemas/SimulationType"
+          },
+          "solver": {
+            "$ref": "#/components/schemas/SolverType"
+          },
+          "timestep": {
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "domain",
+          "error",
+          "finaltime",
+          "load_profile_id",
+          "model_id",
+          "results_data",
+          "results_id",
+          "simulation_id",
+          "simulation_type",
+          "solver",
+          "timestep"
+        ],
+        "type": "object"
+      },
+      "SimulationArray": {
+        "description": "Struct for encapsulation Simulation details",
+        "properties": {
+          "simulations": {
+            "items": {
+              "$ref": "#/components/schemas/SimulationSummary"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "simulations"
+        ],
+        "type": "object"
+      },
+      "SimulationForm": {
+        "description": "## Parameters: * simulation_type - String - must be one of \"Powerflow\", \"Outage\" * load_profile_id - String - must be a valid id that exists in the associated sogno file service * model_id - String - must be a valid id that exists in the associated sogno file service",
+        "properties": {
+          "domain": {
+            "$ref": "#/components/schemas/DomainType"
+          },
+          "finaltime": {
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "load_profile_id": {
+            "type": "string"
+          },
+          "model_id": {
+            "type": "string"
+          },
+          "simulation_type": {
+            "$ref": "#/components/schemas/SimulationType"
+          },
+          "solver": {
+            "$ref": "#/components/schemas/SolverType"
+          },
+          "timestep": {
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "domain",
+          "finaltime",
+          "load_profile_id",
+          "model_id",
+          "simulation_type",
+          "solver",
+          "timestep"
+        ],
+        "title": "Form for submitting a new Simulation",
+        "type": "object"
+      },
+      "SimulationSummary": {
+        "properties": {
+          "model_id": {
+            "type": "string"
+          },
+          "simulation_id": {
+            "format": "uint64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "simulation_type": {
+            "$ref": "#/components/schemas/SimulationType"
+          }
+        },
+        "required": [
+          "model_id",
+          "simulation_id",
+          "simulation_type"
+        ],
+        "type": "object"
+      },
+      "SimulationType": {
+        "description": "Enum for the various Simulation types",
+        "enum": [
+          "Powerflow",
+          "Outage"
+        ],
+        "type": "string"
+      },
+      "SolverType": {
+        "description": "Enum for the various Solver types",
+        "enum": [
+          "MNA",
+          "DAE",
+          "NRP"
+        ],
+        "type": "string"
+      }
+    }
+  },
+  "info": {
+    "title": "dpsim-api",
+    "version": "0.1.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/simulation": {
+      "get": {
+        "description": "List the simulations\n\n* Example request:\n\n``` curl -X GET -H 'Accept: application/json' http://localhost:8000/simulation ```",
+        "operationId": "get_simulations",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimulationArray"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "summary": "Get array of all simulations"
+      },
+      "post": {
+        "description": "Create a new simulation\n\n* Content-Type: application/json\n\n* Example request:\n\n```\n\ncurl -X POST -H 'Accept: application/json' -F file=@testdata/load_profile_data.zip -F model_id=\"theModel.zip\" -F allowed_file_types=application/zip hocalhost:8000/simulation ```",
+        "operationId": "post_simulation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulationForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "summary": "Create a simulation"
+      }
+    },
+    "/simulation/{id}": {
+      "get": {
+        "description": "Show details for a simulation\n\n* Example request:\n\n``` curl -X GET -H 'Accept: application/json' http://localhost:8000/simulation/1 ```",
+        "operationId": "get_simulation_id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uint64",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Simulation"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "summary": "Get a simulation using the ID"
+      }
+    }
+  }
+}

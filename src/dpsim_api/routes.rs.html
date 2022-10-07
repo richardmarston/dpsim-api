@@ -417,6 +417,12 @@
 <span id="417">417</span>
 <span id="418">418</span>
 <span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">rocket::response</span>::{<span class="self">self</span>, <span class="ident">Redirect</span>, <span class="ident">Responder</span>, <span class="ident">Response</span>};
 <span class="kw">use</span> <span class="ident">rocket::serde::json</span>::{<span class="ident">Json</span>};
 <span class="kw">use</span> <span class="ident">async_global_executor::block_on</span>;
@@ -453,6 +459,12 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Simulation</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;({}, {}, {})&quot;</span>, <span class="self">self</span>.<span class="ident">simulation_id</span>, <span class="self">self</span>.<span class="ident">simulation_type</span>, <span class="self">self</span>.<span class="ident">model_id</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">SimulationSummary</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;({}, {}, {})&quot;</span>, <span class="self">self</span>.<span class="ident">simulation_id</span>, <span class="self">self</span>.<span class="ident">simulation_type</span>, <span class="self">self</span>.<span class="ident">model_id</span>)
     }
